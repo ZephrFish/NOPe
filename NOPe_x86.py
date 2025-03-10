@@ -16,6 +16,32 @@ x86_nops = {
     b"\x53\x5B": "PUSH EBX / POP EBX (similar to above, acts as padding)",
     b"\xD9\xD0": "FNOP (FPU NOP, often ignored but useful for evasion)",
     b"\x89\xC0": "MOV EAX, EAX (redundant register move, acts as a NOP)",
+    b"\x40\x48": "INC EAX / DEC EAX",
+    b"\x83\xC0\x00": "ADD EAX, 0 (Redundant addition, does nothing)",
+    b"\x83\xE8\x00": "SUB EAX, 0 (Redundant subtraction, does nothing)",
+    b"\x04\x00": "ADD AL, 0 (Redundant operation on AL register)",
+    b"\x2C\x00": "SUB AL, 0 (Redundant subtraction, acts as a NOP)",
+    b"\x21\xC0": "AND EAX, EAX (Logical AND with itself, preserves value)",
+    b"\x83\xC8\x00": "OR EAX, 0 (Logical OR with 0, no effect on value)",
+    b"\x83\xF0\x00": "XOR EAX, 0 (Redundant XOR, does nothing but clears flags)",
+    b"\x87\xC0": "XCHG EAX, EAX (Redundant exchange, effectively a NOP)",
+    b"\x87\xDB": "XCHG EBX, EBX (Same as above, acts as a NOP)",
+    b"\x89\xC0": "MOV EAX, EAX (Redundant move, has no effect)",
+    b"\x89\xDB": "MOV EBX, EBX (Same as above, another form of NOP)",
+    b"\x50\x58": "PUSH EAX / POP EAX (Stack operation with no real effect)",
+    b"\x51\x59": "PUSH ECX / POP ECX (Similar to above, used for obfuscation)",
+    b"\x8D\x40\x00": "LEA EAX, [EAX] (Load effective address with no effect)",
+    b"\x8D\x49\x00": "LEA ECX, [ECX] (Same as above, acts as a NOP)",
+    b"\x8D\x74\x26\x00": "LEA ESI, [ESI] (Redundant memory address calculation)",
+    b"\x2E\x90": "CS: NOP (Segment override prefix, mostly ignored in modern CPUs)",
+    b"\x3E\x90": "DS: NOP (Segment override, has no practical effect)",
+    b"\x36\x90": "SS: NOP (Another ignored segment override)",
+    b"\x26\x90": "ES: NOP (Acts as a standard NOP)",
+    b"\xD9\xD0": "FNOP (Floating-point NOP, ignored unless using FPU)",
+    b"\xEB\x00": "JMP SHORT $+2 (Jumps to next instruction, wasting cycles)",
+    b"\x75\x00": "JNZ SHORT $+2 (Conditional jump that has no real effect)",
+    b"\x74\x00": "JZ SHORT $+2 (Another jump-based NOP, good for obfuscation)"
+
 }
 
 def O(shl_f):   

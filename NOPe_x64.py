@@ -20,6 +20,26 @@ x64_nops = {
     b"\x49\x89\xD1": "MOV R9, RDX (only acts as a NOP if R9 already equals RDX)",
     b"\x50\x58": "PUSH RAX / POP RAX (stack operation without effect, but touches stack)",
     b"\x53\x5B": "PUSH RBX / POP RBX (similar to above, but can affect shadow space)",
+    b"\x48\xFF\xC0\x48\xFF\xC8": "INC RAX / DEC RAX",
+    b"\x83\xC0\x00": "ADD EAX, 0 (Redundant addition, acts as a NOP)",
+    b"\x83\xE8\x00": "SUB EAX, 0 (Redundant subtraction, does nothing)",
+    b"\x04\x00": "ADD AL, 0 (Has no real effect)",
+    b"\x2C\x00": "SUB AL, 0 (Same as above, just subtraction)",
+    b"\x21\xC0": "AND EAX, EAX (Self-AND operation, keeps same value)",
+    b"\x83\xC8\x00": "OR EAX, 0 (Logical OR with zero, effectively a NOP)",
+    b"\x83\xF0\x00": "XOR EAX, 0 (Redundant XOR, only changes flags)",
+    b"\x48\x87\xC0": "XCHG RAX, RAX (Redundant exchange, acts as a NOP)",
+    b"\x48\x89\xC0": "MOV RAX, RAX (Redundant move, does nothing)",
+    b"\x50\x58": "PUSH RAX / POP RAX (Stack operation with no real effect)",
+    b"\x52\x5A": "PUSH RDX / POP RDX (Another stack NOP trick)",
+    b"\x48\x8D\x40\x00": "LEA RAX, [RAX] (Load effective address with no change)",
+    b"\x48\x8D\x49\x00": "LEA RCX, [RCX] (Acts as a NOP)",
+    b"\x48\x8D\x64\x24\x00": "LEA RSP, [RSP] (Redundant stack pointer adjustment)",
+    b"\xD9\xD0": "FNOP (Floating-point NOP, has no effect on integer operations)",
+    b"\xEB\x00": "JMP SHORT $+2 (Jumps to itself, wasting CPU cycles)",
+    b"\x75\x00": "JNZ SHORT $+2 (Conditional jump acting as a NOP)",
+    b"\x74\x00": "JZ SHORT $+2 (Another jump-based NOP, good for obfuscation)"
+
 }
 
 def O(shl_f):   
@@ -30,7 +50,7 @@ def O(shl_f):
     print(info)
 
     # for key in x64_nops: # all the NOPS lol
-    #     nopbytes = nopbytes + key
+    #      nopbytes = nopbytes + key
 
     b_x = nopbytes + shellcode_bytes
     print("Trying NOP Type: ", info)
