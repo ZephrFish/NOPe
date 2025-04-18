@@ -40,12 +40,12 @@ To regenerate the message box payloads using `MSFVenom`:
 
 x64 shellcode
 ```
-msfvenom -p windows/x64/messagebox TEXT=“NOPe64” TITLE=“Hello” -f raw > msgbox.x64.bin
+msfvenom -p windows/x64/messagebox TEXT="NOPe64" TITLE="Hello" -f raw > msgbox.x64.bin
 ```
 
 x86 shellcode
 ```
-msfvenom -p windows/messagebox TEXT=“NOPe32” TITLE=“Hello” -f raw > msgbox.x86.bin
+msfvenom -p windows/messagebox TEXT="NOPe32" TITLE="Hello" -f raw > msgbox.x86.bin
 ```
 
 # bin2sc
