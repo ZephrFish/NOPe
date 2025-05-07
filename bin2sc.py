@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
+# File: bin2sc.py
+# Purpose: Convert raw shellcode .bin files into embeddable source-code snippets (C arrays, C strings, Rust).
+# Red Team Tradecraft: Automates payload embedding and staging, facilitating in-memory execution and obfuscation (T1027, T1105).
 import sys
 import os
 import argparse
 
 
+# Function: read_shellcode_file
+# Description: Reads raw binary shellcode from disk, handling errors to ensure payload accessibility.
 def read_shellcode_file(filepath: str) -> bytes:
     """Read binary shellcode file."""
     try:
@@ -14,6 +19,8 @@ def read_shellcode_file(filepath: str) -> bytes:
         sys.exit(1)
 
 
+# Function: format_shellcode
+# Description: Transforms raw shellcode bytes into the specified source-code format (C array, C string, Rust).
 def format_shellcode(shellcode: bytes, style: str, name: str, bytes_per_line: int) -> str:
     """Format shellcode bytes in the selected output style."""
     if style == "c-array":
@@ -41,6 +48,8 @@ def format_shellcode(shellcode: bytes, style: str, name: str, bytes_per_line: in
         sys.exit(1)
 
 
+# Function: write_to_file
+# Description: Writes formatted shellcode content to the specified file, with error handling for reliability.
 def write_to_file(output_path: str, content: str) -> None:
     """Write formatted shellcode to a file."""
     try:
@@ -52,6 +61,8 @@ def write_to_file(output_path: str, content: str) -> None:
         sys.exit(1)
 
 
+# Function: main
+# Description: Parses command-line arguments and orchestrates conversion of shellcode to source-code formats.
 def main():
     parser = argparse.ArgumentParser(
         description="Convert a raw shellcode .bin file to various source-code formats.",
